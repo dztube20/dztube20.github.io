@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZ Tube </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/0/00/Liveimg.png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+            border: 1px solid #536ade;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff0000, #536ade, #00ffcc);
+            animation: borderFlow 3s linear infinite;
+        }
+        
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #536ade;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 25px rgba(83, 106, 222, 0.8); }
+            100% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 700px;
+            margin: 0 auto 25px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .video-container {
+            flex: 3;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .controls {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #536ade;
+            border-bottom: 2px solid #536ade;
+            padding-bottom: 10px;
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 15px;
+            background: #222;
+            border: 2px solid #536ade;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .url-input:focus {
+            border-color: #ff3333;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+            outline: none;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #536ade;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            background: #ff3333;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+        
+        .btn.reset {
+            background: #444;
+        }
+        
+        .btn.download {
+            background: linear-gradient(135deg, #00cc99, #009966);
+        }
+        
+        .btn.download:hover {
+            background: linear-gradient(135deg, #00ffcc, #00cc99);
+        }
+        
+        .btn.reset:hover {
+            background: #666;
+        }
+        
+        .iframe-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid #536ade;
+            background: #000;
+        }
+        
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .option-card {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #536ade;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+        
+        .option-card:hover {
+            transform: translateX(5px);
+            background: rgba(50, 50, 50, 0.9);
+            border-left-color: #ff5555;
+        }
+        
+        .option-card h3 {
+            color: #ff5555;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-card p {
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            background: rgba(30, 30, 30, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff3333, #536ade);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+            border-color: #536ade;
+        }
+        
+        .feature i {
+            font-size: 3rem;
+            color: #536ade;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .feature:hover i {
+            color: #ff5555;
+            transform: scale(1.1);
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature p {
+            color: #bbb;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: #aaa;
+            border-top: 1px solid #333;
+        }
+        
+        .warning {
+            background: rgba(200, 0, 0, 0.2);
+            border: 1px solid #536ade;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .sample-videos {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
+        .sample-btn {
+            flex: 1;
+            padding: 12px;
+            background: #333;
+            border: none;
+            border-radius: 8px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .sample-btn:hover {
+            background: #444;
+            color: #ff5555;
+        }
+        
+        .embed-type {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .embed-btn {
+            flex: 1;
+            padding: 10px;
+            background: #333;
+            border: none;
+            border-radius: 6px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .embed-btn.active {
+            background: #536ade;
+            color: white;
+            box-shadow: 0 0 10px rgba(83, 106, 222, 0.5);
+        }
+        
+        .playlist-info {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #00cc99;
+        }
+        
+        .playlist-info h3 {
+            color: #00cc99;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .fullscreen-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .fullscreen-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .close-fullscreen {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff3333;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+        
+        /* Matrix Boot Animation */
+        .matrix-boot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+        }
+
+        .matrix-text {
+            color: #00ff00;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .matrix-logo {
+            color: #00ff00;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        .matrix-progress {
+            width: 300px;
+            height: 20px;
+            border: 1px solid #00ff00;
+            position: relative;
+        }
+
+        .matrix-progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+            transition: width 0.1s linear;
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-size: 16px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+        
+        /* Error Notification */
+        .error-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(200, 0, 0, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+            transform: translateX(150%);
+            transition: transform 0.4s ease-out;
+        }
+        
+        .error-notification.show {
+            display: block;
+            transform: translateX(0);
+        }
+        
+        .error-notification i {
+            margin-right: 10px;
+            color: #ffcc00;
+        }
+        
+        /* Download Modal */
+        .download-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s;
+        }
+        
+        .download-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .download-content {
+            background: #1a1a1a;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid #00cc99;
+            box-shadow: 0 10px 30px rgba(0, 204, 153, 0.3);
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.4s;
+        }
+        
+        .download-modal.active .download-content {
+            transform: translateY(0);
+        }
+        
+        .download-content h2 {
+            color: #00cc99;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .download-content p {
+            color: #ccc;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .download-progress {
+            width: 100%;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .download-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #00cc99, #00ffcc);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        
+        .download-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #00cc99;
+            margin-bottom: 20px;
+        }
+        
+        .download-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            color: #ff5555;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .download-close:hover {
+            background: rgba(255, 85, 85, 0.2);
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #00cc99;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #00ffcc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
+        }
+        
+        .download-btn.complete {
+            background: #536ade;
+        }
+        
+        .download-btn.complete:hover {
+            background: #7389ff;
+        }
+        
+        .quality-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .quality-btn {
+            padding: 8px 15px;
+            background: #333;
+            border: 2px solid #444;
+            border-radius: 6px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 80px;
+        }
+        
+        .quality-btn.active {
+            background: #00cc99;
+            color: white;
+            border-color: #00ffcc;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #00cc99;
+        }
+        
+        .status-indicator i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .download-success {
+            display: none;
+            background: rgba(0, 204, 153, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #00cc99;
+        }
+        
+        .download-success.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn-loading .btn-icon {
+            display: none;
+        }
+        
+        .btn-loading .btn-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        .btn .btn-spinner {
+            display: none;
+        }
+        
+        .playlist-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .playlist-item {
+            padding: 8px;
+            background: rgba(50, 50, 50, 0.5);
+            margin-bottom: 5px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .playlist-item i {
+            margin-right: 10px;
+            color: #00cc99;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .embed-type {
+                flex-direction: column;
+            }
+            
+            .sample-videos {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="matrix-boot" id="matrixBoot">
+        <div class="matrix-rain" id="matrixRain"></div>
+        <div class="matrix-logo">
+            DZ Tube 2.0 </div>
+        <div class="matrix-text" id="matrixText">Initializing system...</div>
+        <div class="matrix-progress">
+            <div class="matrix-progress-bar" id="matrixProgress"></div>
+        </div>
+    </div>
+
+    <div class="error-notification" id="errorNotification">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorMessage">Invalid YouTube URL or ID!</span>
+    </div>
+
+    <!-- <div class="download-modal" id="downloadModal">
+        <div class="download-content">
+            <button class="download-close" id="closeDownloadModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2><i class="fas fa-download"></i> Download Content</h2>
+            <p>Downloading: <span id="downloadTitle">Current Content</span></p>
+            
+            <div class="quality-selector" id="qualitySelector">
+                <button class="quality-btn active" data-quality="144">144p</button>
+                <button class="quality-btn" data-quality="240">240p</button>
+                <button class="quality-btn" data-quality="360">360p</button>
+                <button class="quality-btn" data-quality="480">480p</button>
+                <button class="quality-btn" data-quality="720">720p HD</button>
+                <button class="quality-btn" data-quality="1080">1080p FHD</button>
+                <button class="quality-btn" data-quality="1440">1440p QHD</button>
+                <button class="quality-btn" data-quality="2160">4K UHD</button>
+            </div>
+            
+            <div id="playlistDownloadOptions" style="display: none;">
+                <div class="playlist-info">
+                    <h3><i class="fas fa-list"></i> Playlist Download Options</h3>
+                    <div class="playlist-items" id="playlistItems">
+                        Playlist items will be added here
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button class="sample-btn" id="selectAllBtn" style="width: 100%;">Select All</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-indicator" id="downloadStatus">
+                <i class="fas fa-sync-alt"></i>
+                <span>Preparing download...</span>
+            </div>
+            
+            <div class="download-progress">
+                <div class="download-progress-bar" id="downloadProgressBar"></div>
+            </div>
+            
+            <div class="download-stats">
+                <span id="downloadSpeed">Speed: 0 MB/s</span>
+                <span id="downloadTime">Time: 0s</span>
+                <span id="downloadSize">Size: 0 MB</span>
+            </div>
+            
+            <button class="download-btn" id="startDownloadBtn">
+                <i class="fas fa-play"></i> Start Download
+            </button>
+            
+            <div class="download-success" id="downloadSuccess">
+                <i class="fas fa-check-circle"></i>
+                Download complete! Your content is ready.
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container">
+        <header>
+            <h1><i class="fab fa-youtube"></i> DZ Tube 2.0</h1>
+            <p class="tagline"> VIEW BROWSE PLAY CHECK YOUTUBE LINKS WITHOUT ANY ACCOUNT <br> NO NEED TO FACE ANY ADS NO NEED TO GET TRACKING ANXIOUS <br> <mark style="background-color: rgba(255,0,0,0.3); color: #fff; padding: 2px 8px; border-radius: 4px;">FULL ANONYMITY</mark></p>
+        </header>
+        
+        <div class="main-content">
+            <div class="video-container">
+                <h2 class="section-title">YOUR DESIRE CONTENT</h2>
+                <div class="iframe-container">
+                    <div class="loading-overlay" id="loadingOverlay">
+                        <i class="fas fa-spinner fa-spin fa-3x" style="color:#536ade;"></i>
+                    </div>
+                    <iframe id="ytFrame" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-title" id="videoTitle">Rick Astley - Never Gonna Give You Up (Official Music Video)</div>
+                
+                <div class="warning">
+                    <p><i class="fas fa-exclamation-triangle"></i> Note: Full YouTube site embedding isn't possible due to security restrictions, but this solution provides maximum functionality within allowed limits.</p>
+                </div>
+ <div class="warning">
+                    <p><i class="fa-solid fa-gears"></i> HAVE FUN </p>
+                </div>
+
+
+            </div>
+            
+            <div class="controls">
+                <h2 class="section-title">Player Controls</h2>
+                
+                <input type="text" class="url-input" id="videoUrl" placeholder="Enter YouTube URL, Video ID or Playlist ID" value="dQw4w9WgXcQ">
+                
+                <div class="embed-type">
+                    <button class="embed-btn active" id="videoMode"><i class="fas fa-video"></i> Video</button>
+                    <button class="embed-btn" id="playlistMode"><i class="fas fa-list"></i> Playlist</button>
+                </div>
+                
+                <button class="btn" id="loadBtn">
+                    <i class="fas fa-play-circle btn-icon"></i>
+                    <i class="fas fa-spinner fa-spin btn-spinner"></i>
+                    <span>Load Content</span>
+                </button>
+                
+                <div class="sample-videos">
+                    <button class="sample-btn" data-id="PLlRFEj9H3Oj7Bp8-DfGpfAfDBiblRfl5p" data-type="playlist">Example Playlist</button>
+                    <button class="sample-btn" data-id="jNQXAC9IVRw" data-type="video">Example Video</button>
+                    <button class="sample-btn" data-id="8bPn0Yl-PK4" data-type="video">Example Shorts</button>
+                    <button class="sample-btn" data-id="K-X0YrHhgq0" data-type="video">SURAH MARYAM</button>
+                </div>
+                
+                <!-- <button class="btn download" id="downloadBtn">
+                    <i class="fas fa-download btn-icon"></i>
+                    <i class="fas fa-spinner fa-spin btn-spinner"></i>
+                    <span>Download Content</span>
+                </button> -->
+                <button class="btn" id="fullscreenBtn"><i class="fas fa-expand"></i> Fullscreen Mode</button>
+                <button class="btn reset" id="resetBtn"><i class="fas fa-sync"></i> Reset Player</button>
+                
+                <div class="section-title" style="margin-top: 25px">Integration Options</div>
+                
+                <div class="option-card">
+                    <h3><i class="fas fa-code"></i> Standard Embed</h3>
+                    <p>Embed any YouTube video with basic playback controls. Works on all devices.</p>
+                </div>
+                
+                <div class="option-card">
+                    <h3><i class="fas fa-cogs"></i> Player API</h3>
+                    <p>Advanced control using YouTube IFrame API for custom playback functions.</p>
+                </div>
+                
+                <div class="option-card">
+                    <h3><i class="fas fa-th-list"></i> Playlists</h3>
+                    <p>Embed entire playlists that automatically play through multiple videos.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title" style="text-align: center">Key Features</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-play-circle"></i>
+                <h3>Full Playback Controls</h3>
+                <p>Play, pause, seek, adjust volume, and control playback speed</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fa-solid fa-code"></i>
+                <h3>No Ads</h3>
+                <p>We don't show you any ads here so have fun</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-closed-captioning"></i>
+                <h3>Captions & Subtitles</h3>
+                <p>Support for multiple languages and caption customization</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-video"></i>
+                <h3>Quality Settings</h3>
+                <p>Adjust video quality from 144p to 4K based on connection</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Responsive Design</h3>
+                <p>Works perfectly on desktop, tablet, and mobile devices</p>
+            </div>
+            
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Privacy Protection</h3>
+                <p>Watch and download without tracking or advertisements</p>
+            </div>
+        </div>
+<br>
+        <h2 class="section-title" style="text-align: center">Donate</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="fa-brands fa-btc"></i>
+                <h3>Btc ( Bitcoin )</h3>
+                <p>bc1qfdgeumay5g50dk5uuf9aeqks3zeh6d2x5ftv4k</p>
+            </div>
+        </div>
+            <div class="feature">
+                <i class=""></i>
+                <h3>Sol ( Solana )</h3>
+                <p>7YUeKrQ49Vu2knEN4zerfDVuKcMdbUTKFk9CUmrdCzDh</p>
+            </div>
+            
+            <div class="feature">
+                <i class=""></i>
+                <h3>Dogecoin ( DOGE )</h3>
+                <p>DRAx4hcuhcvN6QvsMePkrNxTM5hbphDzGJ</p>
+            </div>
+            
+            <div class="feature">
+                <i class=""></i>
+                <h3>Tether ( ERC20 ) Ethereum</h3>
+                <p>0x1d7454527f02B7942FF9C8308f8241b6e68A5E38</p>
+            </div>
+        </div>
+
+        <footer>
+            <p> DZ Tube 2.0 &COPY; 2025 Zaynkhan100110</a> & AI</p> 
+            <br>
+            <p>PRIVACY FIRST</p>
+            <br>
+            Email: <a href="mailto:zaynkhan100110@proton.me" style="color: #00cc99;">zaynkhan100110@proton.me</a>
+            <br>
+            <br>
+            <br>
+        </footer>
+    </div>
+    
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <div class="close-fullscreen" id="closeFullscreen">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="fullscreen-video">
+            <iframe id="fullscreenFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Matrix boot animation setup
+        const matrixBoot = document.getElementById('matrixBoot');
+        const matrixText = document.getElementById('matrixText');
+        const matrixProgress = document.getElementById('matrixProgress');
+        const matrixRain = document.getElementById('matrixRain');
+        const errorNotification = document.getElementById('errorNotification');
+        const errorMessage = document.getElementById('errorMessage');
+        const downloadModal = document.getElementById('downloadModal');
+        const closeDownloadModal = document.getElementById('closeDownloadModal');
+        const downloadProgressBar = document.getElementById('downloadProgressBar');
+        const startDownloadBtn = document.getElementById('startDownloadBtn');
+        const downloadTitle = document.getElementById('downloadTitle');
+        const downloadSuccess = document.getElementById('downloadSuccess');
+        const downloadStatus = document.getElementById('downloadStatus');
+        const downloadSpeed = document.getElementById('downloadSpeed');
+        const downloadTime = document.getElementById('downloadTime');
+        const downloadSize = document.getElementById('downloadSize');
+        const playlistItems = document.getElementById('playlistItems');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const playlistDownloadOptions = document.getElementById('playlistDownloadOptions');
+        const loadBtn = document.getElementById('loadBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const videoTitle = document.getElementById('videoTitle');
+        const qualitySelector = document.getElementById('qualitySelector');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const fullscreenFrame = document.getElementById('fullscreenFrame');
+
+        // Video metadata database (simulated)
+        const videoMetadata = {
+            'dQw4w9WgXcQ': {
+                title: 'Rick Astley - Never Gonna Give You Up (Official Music Video)',
+                channel: 'Rick Astley',
+                duration: '3:32'
+            },
+            'jNQXAC9IVRw': {
+                title: 'Me at the zoo',
+                channel: 'jawed',
+                duration: '0:19'
+            },
+            'ge_UgErt4yo': {
+                title: 'Example Video - Nature Scenery',
+                channel: 'Nature Channel',
+                duration: '5:45'
+            },
+            'PLOU2XLYxmsII9mzQ-Xxug4l2o04JBrkLV': {
+                title: 'Chrome DevTools Playlist',
+                channel: 'Google Chrome',
+                duration: '12 videos'
+            },
+            'PLwP_SiAcdui0KVEGXNv5HuU6u3d8i6j3j': {
+                title: 'Sample Playlist',
+                channel: 'Sample Channel',
+                duration: '8 videos'
+            }
+        };
+
+        function createMatrixRain() {
+            const chars = "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+            const columns = Math.floor(window.innerWidth / 20);
+            
+            matrixRain.innerHTML = '';
+            for (let i = 0; i < columns; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.style.left = `${(i * 20) + 10}px`;
+                char.style.top = `${Math.random() * -100}px`;
+                char.style.animationDuration = `${5 + Math.random() * 10}s`;
+                char.style.animationDelay = `${Math.random() * 5}s`;
+                char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                matrixRain.appendChild(char);
+            }
+        }
+
+        function simulateBoot() {
+            const bootMessages = [
+                "Booting DZ Tube 2.0...",
+                "Loading core modules...",
+                "Initializing video engine...",
+                "Establishing secure connection...",
+                "Preparing anonymous session...",
+                "Finalizing setup...",
+                "Ready to go!"
+            ];
+            
+            let progress = 0;
+            let messageIndex = 0;
+            
+            createMatrixRain();
+            
+            const bootInterval = setInterval(() => {
+                progress += 2;
+                matrixProgress.style.width = `${progress}%`;
+                
+                if (progress % 20 === 0 && messageIndex < bootMessages.length) {
+                    matrixText.textContent = bootMessages[messageIndex];
+                    messageIndex++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(bootInterval);
+                    matrixBoot.style.opacity = '0';
+                    setTimeout(() => {
+                        matrixBoot.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        initMainApp();
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorNotification.classList.add('show');
+            
+            setTimeout(() => {
+                errorNotification.classList.remove('show');
+            }, 5000);
+        }
+
+        function showDownloadModal() {
+            const currentVideoId = document.getElementById('videoUrl').value;
+            const currentMode = document.querySelector('.embed-btn.active').id === 'videoMode' ? 'video' : 'playlist';
+            
+            if (currentMode === 'video') {
+                const videoId = getVideoId(currentVideoId);
+                
+                if (!videoId) {
+                    showError('Enter a valid YouTube URL or ID to download');
+                    return;
+                }
+                
+                const videoInfo = videoMetadata[videoId] || { title: `Video: ${videoId}` };
+                downloadTitle.textContent = videoInfo.title;
+                playlistDownloadOptions.style.display = 'none';
+            } else {
+                const playlistId = getPlaylistId(currentVideoId);
+                
+                if (!playlistId) {
+                    showError('Enter a valid YouTube playlist URL or ID to download');
+                    return;
+                }
+                
+                const playlistInfo = videoMetadata[playlistId] || { title: `Playlist: ${playlistId}` };
+                downloadTitle.textContent = playlistInfo.title;
+                playlistDownloadOptions.style.display = 'block';
+                
+                // Generate sample playlist items
+                playlistItems.innerHTML = '';
+                for (let i = 1; i <= 8; i++) {
+                    const item = document.createElement('div');
+                    item.className = 'playlist-item';
+                    item.innerHTML = `
+                        <input type="checkbox" checked>
+                        <i class="fas fa-music"></i>
+                        <span>Playlist Video ${i}</span>
+                    `;
+                    playlistItems.appendChild(item);
+                }
+            }
+            
+            downloadModal.classList.add('active');
+        }
+
+        function simulateDownload() {
+            // Reset UI
+            downloadProgressBar.style.width = '0%';
+            downloadStatus.innerHTML = '<i class="fas fa-sync-alt"></i> Downloading...';
+            downloadSuccess.classList.remove('show');
+            startDownloadBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Download';
+            startDownloadBtn.classList.remove('complete');
+            
+            // Get selected quality
+            const selectedQuality = document.querySelector('.quality-btn.active').getAttribute('data-quality');
+            
+            // Generate random download stats
+            const randomSpeed = (Math.random() * 10 + 5).toFixed(1);
+            const randomSize = (Math.random() * 50 + 100).toFixed(1);
+            
+            downloadSpeed.textContent = `Speed: ${randomSpeed} MB/s`;
+            downloadSize.textContent = `Size: ${randomSize} MB`;
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                downloadProgressBar.style.width = `${progress}%`;
+                
+                // Update time
+                const time = (progress / 2).toFixed(0);
+                downloadTime.textContent = `Time: ${time}s`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    downloadStatus.innerHTML = '<i class="fas fa-check"></i> Download complete!';
+                    startDownloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Again';
+                    startDownloadBtn.classList.add('complete');
+                    downloadSuccess.classList.add('show');
+                }
+            }, 100);
+        }
+
+        function initMainApp() {
+            const videoUrl = document.getElementById('videoUrl');
+            const sampleBtns = document.querySelectorAll('.sample-btn');
+            const videoModeBtn = document.getElementById('videoMode');
+            const playlistModeBtn = document.getElementById('playlistMode');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+            const closeFullscreen = document.getElementById('closeFullscreen');
+            const qualityBtns = document.querySelectorAll('.quality-btn');
+            
+            // Use let for iframe reference so we can update it
+            let ytFrame = document.getElementById('ytFrame');
+            
+            const initialVideoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+            let currentMode = 'video';
+            let currentVideoId = "dQw4w9WgXcQ";
+            
+            // Enhanced video ID extractor
+            function getVideoId(url) {
+                // Handle direct IDs
+                if (!url.includes('http') && !url.includes('www') && !url.includes('youtu')) {
+                    return url.trim();
+                }
+                
+                // Handle youtu.be URLs
+                if (url.includes('youtu.be/')) {
+                    const idPart = url.split('youtu.be/')[1];
+                    return idPart.split(/[?&#]/)[0];
+                }
+                
+                // Handle various YouTube formats
+                const patterns = [
+                    /youtube\.com\/watch\?v=([^&?#]+)/,
+                    /youtube\.com\/embed\/([^?&#]+)/,
+                    /youtube\.com\/v\/([^?&#]+)/,
+                    /youtube\.com\/shorts\/([^?&#]+)/,
+                    /youtu\.be\/([^?&#]+)/
+                ];
+                
+                for (const pattern of patterns) {
+                    const match = url.match(pattern);
+                    if (match && match[1]) {
+                        return match[1];
+                    }
+                }
+                
+                // Extract from query parameters
+                try {
+                    const urlObj = new URL(url);
+                    const videoId = urlObj.searchParams.get('v');
+                    if (videoId) return videoId;
+                } catch (e) {
+                    // Invalid URL format
+                }
+                
+                // Find something that looks like a video ID
+                const idPattern = /[a-zA-Z0-9_-]{11}/;
+                const idMatch = url.match(idPattern);
+                return idMatch ? idMatch[0] : null;
+            }
+            
+            function getPlaylistId(url) {
+                // Handle direct IDs
+                if (!url.includes('http') && !url.includes('www') && !url.includes('youtu')) {
+                    return url.trim();
+                }
+                
+                // Extract playlist ID from URL
+                const regExp = /[&?]list=([^&]+)/i;
+                const match = url.match(regExp);
+                return match ? match[1] : null;
+            }
+            
+            function setButtonLoading(button, isLoading) {
+                if (isLoading) {
+                    button.classList.add('btn-loading');
+                    button.disabled = true;
+                } else {
+                    button.classList.remove('btn-loading');
+                    button.disabled = false;
+                }
+            }
+            
+            function updateVideoTitle(videoId) {
+                if (videoMetadata[videoId]) {
+                    videoTitle.textContent = videoMetadata[videoId].title;
+                } else {
+                    videoTitle.textContent = "YouTube Video";
+                }
+            }
+            
+            function loadContent() {
+                let contentId = videoUrl.value.trim();
+                
+                if (!contentId) {
+                    showError('Please enter a YouTube URL or ID');
+                    return;
+                }
+                
+                let embedUrl;
+                
+                if (currentMode === 'video') {
+                    const videoId = getVideoId(contentId);
+                    
+                    if (!videoId) {
+                        showError('Invalid YouTube URL or video ID');
+                        return;
+                    }
+                    
+                    currentVideoId = videoId;
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                    updateVideoTitle(videoId);
+                } else {
+                    const playlistId = getPlaylistId(contentId);
+                    
+                    if (!playlistId) {
+                        showError('Invalid YouTube playlist URL or ID');
+                        return;
+                    }
+                    
+                    embedUrl = `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
+                    if (videoMetadata[playlistId]) {
+                        videoTitle.textContent = videoMetadata[playlistId].title;
+                    } else {
+                        videoTitle.textContent = "YouTube Playlist";
+                    }
+                }
+                
+                // Show loading state
+                setButtonLoading(loadBtn, true);
+                loadingOverlay.style.display = 'flex';
+                
+                // Update iframe src directly instead of recreating
+                ytFrame.src = embedUrl;
+                
+                // Handle iframe load event
+                ytFrame.onload = function() {
+                    setButtonLoading(loadBtn, false);
+                    loadingOverlay.style.display = 'none';
+                };
+                
+                // Handle errors
+                ytFrame.onerror = function() {
+                    showError('Failed to load video. Please check the URL.');
+                    setButtonLoading(loadBtn, false);
+                    loadingOverlay.style.display = 'none';
+                };
+            }
+            
+            // Event listeners
+            videoModeBtn.addEventListener('click', function() {
+                currentMode = 'video';
+                videoModeBtn.classList.add('active');
+                playlistModeBtn.classList.remove('active');
+                videoUrl.placeholder = "Enter YouTube URL or Video ID";
+            });
+            
+            playlistModeBtn.addEventListener('click', function() {
+                currentMode = 'playlist';
+                playlistModeBtn.classList.add('active');
+                videoModeBtn.classList.remove('active');
+                videoUrl.placeholder = "Enter YouTube Playlist URL or ID";
+            });
+            
+            loadBtn.addEventListener('click', loadContent);
+            
+            sampleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const contentId = this.getAttribute('data-id');
+                    const type = this.getAttribute('data-type');
+                    
+                    videoUrl.value = contentId;
+                    
+                    if (type === 'playlist') {
+                        currentMode = 'playlist';
+                        playlistModeBtn.classList.add('active');
+                        videoModeBtn.classList.remove('active');
+                    } else {
+                        currentMode = 'video';
+                        videoModeBtn.classList.add('active');
+                        playlistModeBtn.classList.remove('active');
+                    }
+                    
+                    loadContent();
+                });
+            });
+            
+            videoUrl.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loadContent();
+                }
+            });
+            
+            fullscreenBtn.addEventListener('click', function() {
+                let currentSrc = ytFrame.src;
+                if (!currentSrc.includes('autoplay=1')) {
+                    currentSrc += (currentSrc.includes('?') ? '&' : '?') + 'autoplay=1';
+                }
+                
+                fullscreenFrame.src = currentSrc;
+                fullscreenOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    fullscreenFrame.focus();
+                }, 100);
+            });
+
+            closeFullscreen.addEventListener('click', function() {
+                fullscreenOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                fullscreenFrame.src = ''; 
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && fullscreenOverlay.style.display === 'block') {
+                    fullscreenOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    fullscreenFrame.src = '';
+                }
+            });
+
+            resetBtn.addEventListener('click', function() {
+                ytFrame.src = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+                videoUrl.value = "dQw4w9WgXcQ";
+                updateVideoTitle('dQw4w9WgXcQ');
+                
+                videoModeBtn.classList.add('active');
+                playlistModeBtn.classList.remove('active');
+                currentMode = 'video';
+                
+                const originalText = resetBtn.innerHTML;
+                resetBtn.innerHTML = '<i class="fas fa-check"></i> Player Reset!';
+                resetBtn.style.background = '#00cc99';
+                
+                setTimeout(() => {
+                    resetBtn.innerHTML = originalText;
+                    resetBtn.style.background = '#444';
+                }, 2000);
+            });
+            
+            // Download functionality
+            downloadBtn.addEventListener('click', function() {
+                setButtonLoading(downloadBtn, true);
+                
+                setTimeout(() => {
+                    showDownloadModal();
+                    setButtonLoading(downloadBtn, false);
+                }, 800);
+            });
+            
+            closeDownloadModal.addEventListener('click', function() {
+                downloadModal.classList.remove('active');
+            });
+            
+            startDownloadBtn.addEventListener('click', function() {
+                setButtonLoading(startDownloadBtn, true);
+                
+                setTimeout(() => {
+                    simulateDownload();
+                    setButtonLoading(startDownloadBtn, false);
+                }, 500);
+            });
+            
+            qualityBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    qualityBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            selectAllBtn.addEventListener('click', function() {
+                const checkboxes = playlistItems.querySelectorAll('input[type="checkbox"]');
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = !allChecked;
+                });
+                
+                this.textContent = allChecked ? 'Select All' : 'Deselect All';
+            });
+            
+            // Initialize with current video
+            updateVideoTitle('dQw4w9WgXcQ');
+        }
+
+        // Start the boot animation
+        setTimeout(simulateBoot, 500);
+
+        // Safety fallback in case boot gets stuck
+        setTimeout(() => {
+            if (document.getElementById('matrixBoot').style.display !== 'none') {
+                document.getElementById('matrixBoot').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                initMainApp();
+            }
+        }, 10000);
+    });
+    </script>
+</body>
+</html>
