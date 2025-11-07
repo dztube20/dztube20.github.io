@@ -13,6 +13,8 @@ That's required more than effort also need some funds if you guys find this help
 
 Remember :: I was used ai for build some part of this website
 
+Note :: I am not with any affiliate or sponsorship with anyone in this moment
+
 
 
                                            ENJOY
